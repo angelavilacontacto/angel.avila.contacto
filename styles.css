@@ -60,31 +60,84 @@ h1 {
 .contact-info {
     display: flex;
     justify-content: center;
-    gap: 25px;
-    margin-top: 25px;
+    gap: 15px;
+    margin-top: 30px;
     flex-wrap: wrap;
-    font-size: 0.95em;
 }
 
-.contact-item {
-    display: flex;
+.contact-btn {
+    display: inline-flex;
     align-items: center;
+    justify-content: center;
     gap: 8px;
-    background: rgba(255,255,255,0.1);
-    padding: 8px 15px;
-    border-radius: 20px;
-    backdrop-filter: blur(10px);
-}
-
-.contact-item a {
-    color: white;
+    background: rgba(255,255,255,0.95);
+    color: #1e3c72;
+    padding: 12px 20px;
+    border-radius: 25px;
     text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95em;
     transition: all 0.3s;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
 }
 
-.contact-item a:hover {
-    text-shadow: 0 0 20px rgba(255,255,255,1), 0 0 30px rgba(255,255,255,0.8), 0 0 40px rgba(255,255,255,0.6);
-    transform: scale(1.1);
+.contact-btn:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+    transition: left 0.5s;
+}
+
+.contact-btn:hover:before {
+    left: 100%;
+}
+
+.contact-btn:hover {
+    transform: translateY(-5px) scale(1.08);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.4), 0 0 30px rgba(255,255,255,0.6);
+    filter: brightness(1.1);
+}
+
+.contact-btn-whatsapp:hover {
+    background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+    color: white;
+}
+
+.contact-btn-linkedin:hover {
+    background: linear-gradient(135deg, #0077B5 0%, #005582 100%);
+    color: white;
+}
+
+.contact-btn-facebook:hover {
+    background: linear-gradient(135deg, #1877F2 0%, #0d5dbf 100%);
+    color: white;
+}
+
+.contact-btn-instagram:hover {
+    background: linear-gradient(135deg, #E4405F 0%, #C13584 100%);
+    color: white;
+}
+
+.contact-btn-location {
+    background: rgba(255,255,255,0.95);
+    color: #1e3c72;
+}
+
+.contact-btn-location:hover {
+    background: linear-gradient(135deg, #7e22ce 0%, #9333ea 100%);
+    color: white;
+}
+
+.contact-btn-download:hover {
+    background: linear-gradient(135deg, #059669 0%, #047857 100%);
+    color: white;
 }
 
 main {
@@ -338,49 +391,7 @@ h2 {
     gap: 15px;
     flex-wrap: wrap;
     margin-top: 20px;
-}
-
-.btn {
-    display: inline-block;
-    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
-    color: white;
-    padding: 14px 30px;
-    text-decoration: none;
-    border-radius: 25px;
-    font-weight: 600;
-    transition: all 0.3s;
-    box-shadow: 0 5px 15px rgba(30, 60, 114, 0.3);
-    position: relative;
-    overflow: hidden;
-}
-
-.btn:before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent);
-    transition: left 0.5s;
-}
-
-.btn:hover:before {
-    left: 100%;
-}
-
-.btn:hover {
-    transform: translateY(-5px) scale(1.05);
-    box-shadow: 0 15px 45px rgba(30, 60, 114, 0.8), 0 0 40px rgba(42, 82, 152, 0.9), 0 0 60px rgba(126, 34, 206, 0.5);
-    filter: brightness(1.3);
-}
-
-.btn-secondary {
-    background: linear-gradient(135deg, #7e22ce 0%, #9333ea 100%);
-}
-
-.btn-whatsapp {
-    background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+    justify-content: center;
 }
 
 footer {
