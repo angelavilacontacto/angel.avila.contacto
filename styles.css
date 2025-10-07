@@ -140,6 +140,11 @@ h1 {
     color: white;
 }
 
+.contact-btn:not([class*="-whatsapp"]):not([class*="-linkedin"]):not([class*="-facebook"]):not([class*="-instagram"]):not([class*="-location"]):not([class*="-download"]):hover {
+    background: linear-gradient(135deg, #DC2626 0%, #991B1B 100%);
+    color: white;
+}
+
 main {
     padding: 50px 40px;
 }
