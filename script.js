@@ -1,49 +1,432 @@
-// Funcionalidad para los desplegables con hover automático
-const collapsibles = document.querySelectorAll('.collapsible');
-
-collapsibles.forEach(button => {
-    // Click manual (opcional)
-    button.addEventListener('click', function() {
-        toggleCollapsible(this);
-    });
-    
-    // Hover automático - abrir al pasar el mouse
-    button.addEventListener('mouseenter', function() {
-        openCollapsible(this);
-    });
-    
-    // Cerrar al salir el mouse del área completa (botón + contenido)
-    const content = button.nextElementSibling;
-    const wrapper = document.createElement('div');
-    wrapper.className = 'collapsible-wrapper';
-    button.parentNode.insertBefore(wrapper, button);
-    wrapper.appendChild(button);
-    wrapper.appendChild(content);
-    
-    wrapper.addEventListener('mouseleave', function() {
-        closeCollapsible(button);
-    });
-});
-
-function openCollapsible(button) {
-    button.classList.add('active');
-    const content = button.nextElementSibling;
-    content.style.maxHeight = content.scrollHeight + "px";
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-function closeCollapsible(button) {
-    button.classList.remove('active');
-    const content = button.nextElementSibling;
-    content.style.maxHeight = null;
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #7e22ce 100%);
+    min-height: 100vh;
+    padding: 20px;
 }
 
-function toggleCollapsible(button) {
-    button.classList.toggle('active');
-    const content = button.nextElementSibling;
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+    overflow: hidden;
+}
+
+header {
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #7e22ce 100%);
+    color: white;
+    padding: 50px 40px;
+    text-align: center;
+    position: relative;
+}
+
+.profile-img {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    border: 5px solid white;
+    margin: 0 auto 20px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 60px;
+    color: white;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+h1 {
+    font-size: 2.8em;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+}
+
+.subtitle {
+    font-size: 1.4em;
+    opacity: 0.95;
+    font-weight: 300;
+}
+
+.contact-info {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 30px;
+    flex-wrap: wrap;
+}
+
+.contact-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: rgba(255,255,255,0.95);
+    color: #1e3c72;
+    padding: 12px 20px;
+    border-radius: 25px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95em;
+    transition: all 0.3s;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.contact-btn:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+    transition: left 0.5s;
+}
+
+.contact-btn:hover:before {
+    left: 100%;
+}
+
+.contact-btn:hover {
+    transform: translateY(-5px) scale(1.08);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.4), 0 0 30px rgba(255,255,255,0.6);
+    filter: brightness(1.1);
+}
+
+.contact-btn-whatsapp:hover {
+    background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+    color: white;
+}
+
+.contact-btn-linkedin:hover {
+    background: linear-gradient(135deg, #0077B5 0%, #005582 100%);
+    color: white;
+}
+
+.contact-btn-facebook:hover {
+    background: linear-gradient(135deg, #1877F2 0%, #0d5dbf 100%);
+    color: white;
+}
+
+.contact-btn-instagram:hover {
+    background: linear-gradient(135deg, #E4405F 0%, #C13584 100%);
+    color: white;
+}
+
+.contact-btn-location {
+    background: rgba(255,255,255,0.95);
+    color: #1e3c72;
+}
+
+.contact-btn-location:hover {
+    background: linear-gradient(135deg, #7e22ce 0%, #9333ea 100%);
+    color: white;
+}
+
+.contact-btn-download:hover {
+    background: linear-gradient(135deg, #059669 0%, #047857 100%);
+    color: white;
+}
+
+main {
+    padding: 50px 40px;
+}
+
+section {
+    margin-bottom: 45px;
+}
+
+h2 {
+    color: #1e3c72;
+    font-size: 2em;
+    margin-bottom: 25px;
+    padding-bottom: 10px;
+    border-bottom: 3px solid #2a5298;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.about-text {
+    font-size: 1.1em;
+    color: #555;
+    line-height: 1.9;
+    text-align: justify;
+}
+
+.skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.skill-item {
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+    color: white;
+    padding: 15px 10px;
+    border-radius: 10px;
+    text-align: center;
+    font-weight: 600;
+    transition: all 0.3s;
+    font-size: 0.95em;
+    cursor: pointer;
+}
+
+.skill-item:hover {
+    transform: translateY(-8px) scale(1.05);
+    box-shadow: 0 15px 45px rgba(30, 60, 114, 0.6), 0 0 30px rgba(42, 82, 152, 0.8), 0 0 50px rgba(126, 34, 206, 0.4);
+    filter: brightness(1.25);
+}
+
+.experience-item, .education-item {
+    padding: 25px;
+    background: #f8f9fa;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    border-left: 5px solid #2a5298;
+    transition: all 0.3s;
+}
+
+.experience-item:hover, .education-item:hover {
+    box-shadow: 0 10px 35px rgba(0,0,0,0.2), 0 0 25px rgba(42, 82, 152, 0.3);
+    transform: translateX(10px);
+    filter: brightness(1.05);
+}
+
+.experience-item h3, .education-item h3 {
+    color: #1e3c72;
+    margin-bottom: 8px;
+    font-size: 1.3em;
+}
+
+.date {
+    color: #7e22ce;
+    font-weight: 700;
+    margin-bottom: 10px;
+    font-size: 0.95em;
+}
+
+.company {
+    color: #2a5298;
+    font-weight: 700;
+    font-size: 1.1em;
+    margin-bottom: 8px;
+}
+
+.description {
+    color: #666;
+    line-height: 1.7;
+    margin-top: 10px;
+}
+
+.certifications {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    padding: 20px;
+    border-radius: 10px;
+    margin-top: 15px;
+}
+
+.certifications h4 {
+    color: #1e3c72;
+    margin-bottom: 15px;
+}
+
+.cert-list {
+    list-style: none;
+}
+
+.cert-list li {
+    padding: 8px 0;
+    padding-left: 25px;
+    position: relative;
+    color: #555;
+}
+
+.cert-list li:before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: #2a5298;
+    font-weight: bold;
+}
+
+.competencias-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.competencia-item {
+    background: #f8f9fa;
+    padding: 12px 20px;
+    border-radius: 8px;
+    border-left: 3px solid #2a5298;
+    color: #555;
+    font-weight: 500;
+}
+
+.collapsible-wrapper {
+    margin-bottom: 0;
+}
+
+.collapsible-wrapper .collapsible {
+    margin-bottom: 0;
+}
+
+.collapsible-wrapper .collapsible-content {
+    margin-bottom: 20px;
+}
+
+.collapsible {
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+    color: white;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 1.3em;
+    font-weight: 600;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    transition: all 0.3s;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.collapsible:before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.5);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.collapsible:hover:before {
+    width: 400px;
+    height: 400px;
+}
+
+.collapsible:hover {
+    background: linear-gradient(135deg, #2a5298 0%, #1e3c72 100%);
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 12px 40px rgba(30, 60, 114, 0.7), 0 0 40px rgba(42, 82, 152, 0.8), 0 0 60px rgba(126, 34, 206, 0.4);
+    filter: brightness(1.2);
+}
+
+.collapsible:after {
+    content: '\002B';
+    font-weight: bold;
+    font-size: 1.5em;
+    transition: transform 0.3s;
+}
+
+.collapsible.active:after {
+    content: "\2212";
+    transform: rotate(180deg);
+}
+
+.collapsible-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease-out;
+    background: #f8f9fa;
+    border-radius: 0 0 10px 10px;
+    margin-bottom: 20px;
+}
+
+.collapsible-content-inner {
+    padding: 20px;
+}
+
+.badges {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+.badge {
+    background: linear-gradient(135deg, #7e22ce 0%, #9333ea 100%);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 0.9em;
+    transition: all 0.3s;
+    cursor: pointer;
+}
+
+.badge:hover {
+    transform: scale(1.1);
+    box-shadow: 0 8px 25px rgba(126, 34, 206, 0.6), 0 0 30px rgba(147, 51, 234, 0.8);
+    filter: brightness(1.2);
+}
+
+.btn-group {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+    justify-content: center;
+}
+
+footer {
+    background: #1a1a1a;
+    color: white;
+    text-align: center;
+    padding: 25px;
+}
+
+.footer-links {
+    margin-bottom: 15px;
+}
+
+.footer-links a {
+    color: #2a5298;
+    text-decoration: none;
+    margin: 0 15px;
+    font-weight: 500;
+}
+
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2em;
+    }
     
-    if (content.style.maxHeight) {
-        content.style.maxHeight = null;
-    } else {
-        content.style.maxHeight = content.scrollHeight + "px";
+    main {
+        padding: 30px 20px;
+    }
+
+    .contact-info {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .skills-grid {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
     }
 }
